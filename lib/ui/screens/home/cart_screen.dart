@@ -1,5 +1,7 @@
 import 'package:demo_app/ui/common/widgets.dart';
+import 'package:demo_app/ui/screens/home/checkout_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class CartScreen extends StatelessWidget {
@@ -73,7 +75,9 @@ class CartScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GoRouter.of(context).push(CheckoutScreen.route);
+                    },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

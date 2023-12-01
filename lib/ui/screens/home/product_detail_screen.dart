@@ -17,7 +17,7 @@ class ProductDetailScreen extends StatelessWidget {
         child: SizedBox(
           height: 58,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

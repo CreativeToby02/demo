@@ -1,6 +1,6 @@
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
-import 'package:demo_app/ui/screens/forgot_password/confirm_email_code_screen.dart';
+import 'package:demo_app/ui/screens/forgot_password/enter_code_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,8 +42,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               const SizedBox(height: 100),
               ElevatedButton(
                   onPressed: () {
-                    GoRouter.of(context)
-                        .push(EmailCodeConfirmationScreen.route);
+                    GoRouter.of(context).push(EnterCodeScreen.route);
                   },
                   child: const Text('Send Code')),
             ],
