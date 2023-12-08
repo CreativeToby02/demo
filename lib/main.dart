@@ -2,9 +2,8 @@ import 'package:demo_app/core/routes.dart';
 import 'package:demo_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-
 void main() {
-   const MyApp();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
