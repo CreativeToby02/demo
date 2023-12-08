@@ -1,8 +1,17 @@
 import 'package:demo_app/ui/common/bottom_nav_bar.dart';
+import 'package:demo_app/ui/screens/account/address_screen.dart';
+import 'package:demo_app/ui/screens/account/help_center.dart';
+import 'package:demo_app/ui/screens/account/my_details_screen.dart';
+import 'package:demo_app/ui/screens/account/my_orders_screen.dart';
+import 'package:demo_app/ui/screens/account/notification_setting_screen.dart';
+import 'package:demo_app/ui/screens/account/payment_method_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/confirm_email_code_screen.dart';
+import 'package:demo_app/ui/screens/forgot_password/enter_code_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/forgot_password_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/reset_password.dart';
+import 'package:demo_app/ui/screens/account/add_new_card_screen.dart';
 import 'package:demo_app/ui/screens/home/cart_screen.dart';
+import 'package:demo_app/ui/screens/home/checkout_screen.dart';
 import 'package:demo_app/ui/screens/home/home.dart';
 import 'package:demo_app/ui/screens/home/notification_screen.dart';
 import 'package:demo_app/ui/screens/home/product_detail_screen.dart';
@@ -47,6 +56,12 @@ final GoRouter routes = GoRouter(
       name: ForgotPasswordScreen.name,
       builder: (BuildContext context, GoRouterState state) =>
           const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: EnterCodeScreen.route,
+      name: EnterCodeScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const EnterCodeScreen(),
     ),
     GoRoute(
       path: HomeScreen.route,
@@ -101,6 +116,54 @@ final GoRouter routes = GoRouter(
       name: EmailCodeConfirmationScreen.name,
       builder: (BuildContext context, GoRouterState state) =>
           const EmailCodeConfirmationScreen(),
+    ),
+    GoRoute(
+      path: CheckoutScreen.route,
+      name: CheckoutScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const CheckoutScreen(),
+    ),
+    GoRoute(
+      path: AddressScreen.route,
+      name: AddressScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const AddressScreen(),
+    ),
+    GoRoute(
+      path: PaymentMethodScreen.route,
+      name: PaymentMethodScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const PaymentMethodScreen(),
+    ),
+    GoRoute(
+      path: AddNewCardScreen.route,
+      name: AddNewCardScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const AddNewCardScreen(),
+    ),
+    GoRoute(
+      path: MyOrdersScreen.route,
+      name: MyOrdersScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const MyOrdersScreen(),
+    ),
+    GoRoute(
+      path: NotificationSettingScreen.route,
+      name: NotificationSettingScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const NotificationSettingScreen(),
+    ),
+    GoRoute(
+      path: MyDetailsScreen.route,
+      name: MyDetailsScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const MyDetailsScreen(),
+    ),
+    GoRoute(
+      path: HelpCenterScreen.route,
+      name: HelpCenterScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const HelpCenterScreen(),
     ),
   ],
 );

@@ -13,11 +13,12 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: StoreAppBar(title: 'Details'),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 58,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -64,14 +65,10 @@ class ProductDetailScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const StoreAppBar(
-                  title: 'Details',
-                ),
-                const SizedBox(height: 15),
                 Container(
                   height: 0.5,
                   width: double.infinity,

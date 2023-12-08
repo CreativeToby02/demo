@@ -20,33 +20,52 @@ class ReturnButton extends StatelessWidget {
   }
 }
 
-class StoreAppBar extends StatelessWidget {
+class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
   const StoreAppBar({
+    required this.title,
+    this.end,
     super.key,
-    this.title,
     this.icon,
+    this.prefixIcon,
   });
-  final String? title;
-  final Widget? icon;
+  final Widget? icon, prefixIcon;
+  final String title;
+  final Widget? end;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-            onTap: () => context.pop(),
-            child: const Icon(Icons.arrow_back_outlined)),
-        Text(
-          '$title',
-          style: Theme.of(context).textTheme.displayMedium,
-        ),
-        GestureDetector(
-            onTap: () => GoRouter.of(context).push(NotificationScreen.route),
-            child: icon ?? const Icon(Icons.notifications_none_outlined)),
-      ],
+    return AppBar(
+      backgroundColor: Colors.white,
+      automaticallyImplyLeading: false,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          prefixIcon ??
+              GestureDetector(
+                onTap: () => context.pop(),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.arrow_back_outlined,
+                      size: 25.0,
+                    ),
+                  ],
+                ),
+              ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          GestureDetector(
+              onTap: () => GoRouter.of(context).push(NotificationScreen.route),
+              child: icon ?? const Icon(Icons.notifications_none_outlined)),
+        ],
+      ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class GoogleAuthButton extends StatelessWidget {
@@ -99,7 +118,7 @@ class ProductSale extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: const DecorationImage(
-                image: AssetImage('assets/images/image 1.png'),
+                image: AssetImage('assets/images/image 5.png'),
               ),
             ),
             child: Align(
@@ -137,6 +156,33 @@ class ProductSale extends StatelessWidget {
           Text('PKR 1,190', style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
+    );
+  }
+}
+
+class SummaryLine extends StatelessWidget {
+  const SummaryLine({
+    super.key,
+    this.leadingText,
+    this.trailingText,
+  });
+  final String? leadingText, trailingText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '$leadingText',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        Text('$trailingText',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w600)),
+      ],
     );
   }
 }

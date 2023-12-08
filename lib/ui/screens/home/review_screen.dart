@@ -10,16 +10,13 @@ class ReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const StoreAppBar(title: 'Reviews'),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StoreAppBar(
-                title: 'Reviews',
-              ),
-              const SizedBox(height: 15),
               const Divider(
                 height: 2,
                 color: Colors.black26,
