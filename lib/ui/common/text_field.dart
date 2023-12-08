@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 class StoreTextField extends StatelessWidget {
   const StoreTextField({
     super.key,
+    this.prefixIcon,
+    this.hintText,
+    this.suffixIcon,
   });
+
+  final Widget? prefixIcon, suffixIcon;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        hintText: 'Search anything',
+        hintText: hintText,
         hintStyle: Theme.of(context).textTheme.displaySmall,
-        prefixIcon: SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: SvgPicture.asset(
-              'assets/icons/search-icon.svg',
-            ),
-          ),
-        ),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
         prefixIconConstraints: const BoxConstraints(
           maxHeight: 50,
           maxWidth: 50,

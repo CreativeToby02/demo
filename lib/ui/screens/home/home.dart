@@ -92,11 +92,22 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: SizedBox(
                       height: 53,
                       child: Center(
-                        child: StoreTextField(),
+                        child: StoreTextField(
+                          hintText: 'Search anything',
+                          prefixIcon: SizedBox(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: SvgPicture.asset(
+                                'assets/icons/search-icon.svg',
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -146,23 +157,120 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).push(ProductDetailScreen.route);
-                    },
-                    child: ProductSale(
-                      isSelected: savedItem,
-                      onTap: () {
-                        setState(() {
-                          savedItem = !savedItem;
-                        });
-                      },
+              Expanded(
+                child: SizedBox(
+                  height: 600,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .push(ProductDetailScreen.route);
+                              },
+                              child: ProductSale(
+                                isSelected: savedItem,
+                                onTap: () {
+                                  setState(() {
+                                    savedItem = !savedItem;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .push(ProductDetailScreen.route);
+                              },
+                              child: ProductSale(
+                                isSelected: savedItem,
+                                onTap: () {
+                                  setState(() {
+                                    savedItem = !savedItem;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .push(ProductDetailScreen.route);
+                              },
+                              child: ProductSale(
+                                isSelected: savedItem,
+                                onTap: () {
+                                  setState(() {
+                                    savedItem = !savedItem;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .push(ProductDetailScreen.route);
+                              },
+                              child: ProductSale(
+                                isSelected: savedItem,
+                                onTap: () {
+                                  setState(() {
+                                    savedItem = !savedItem;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .push(ProductDetailScreen.route);
+                              },
+                              child: ProductSale(
+                                isSelected: savedItem,
+                                onTap: () {
+                                  setState(() {
+                                    savedItem = !savedItem;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                GoRouter.of(context)
+                                    .push(ProductDetailScreen.route);
+                              },
+                              child: ProductSale(
+                                isSelected: savedItem,
+                                onTap: () {
+                                  setState(() {
+                                    savedItem = !savedItem;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),

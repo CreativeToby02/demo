@@ -10,16 +10,13 @@ class SavedItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'Saved Items'),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StoreAppBar(
-                title: 'Saved Items',
-              ),
-              const SizedBox(height: 15),
               const Divider(
                 height: 2,
                 color: Colors.black26,

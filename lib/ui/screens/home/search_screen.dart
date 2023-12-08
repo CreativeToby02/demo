@@ -1,6 +1,7 @@
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class SearchScreen extends StatelessWidget {
   static const String name = 'search';
@@ -10,16 +11,26 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'Search'),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const StoreAppBar(
-                title: 'Search',
+              SizedBox(
+                height: 53,
+                child: StoreTextField(
+                  hintText: 'Search anything',
+                  prefixIcon: SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: SvgPicture.asset(
+                        'assets/icons/search-icon.svg',
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-              const StoreTextField(),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

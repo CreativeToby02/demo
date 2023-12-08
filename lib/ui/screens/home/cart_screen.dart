@@ -12,17 +12,14 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'My Cart'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const StoreAppBar(
-                  title: 'My Cart',
-                ),
-                const SizedBox(height: 15),
                 const Divider(
                   height: 2,
                   color: Colors.black26,
@@ -35,7 +32,7 @@ class CartScreen extends StatelessWidget {
                 Container(
                   height: 55,
                   width: double.infinity,
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF2F2F2),
                     borderRadius: BorderRadius.circular(5),
@@ -50,12 +47,12 @@ class CartScreen extends StatelessWidget {
                   leadingText: 'Sub-total',
                   trailingText: 'PKR 5,870',
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const SummaryLine(
                   leadingText: 'VAT (%)',
                   trailingText: 'PKR 5,870',
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const SummaryLine(
                   leadingText: 'Shipping fee',
                   trailingText: 'PKR 5,870',
@@ -64,28 +61,29 @@ class CartScreen extends StatelessWidget {
                 const Divider(
                   height: 2,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 const SummaryLine(
                   leadingText: 'Total',
                   trailingText: 'PKR 5,870',
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 const Divider(
                   height: 2,
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
-                    onPressed: () {
-                      GoRouter.of(context).push(CheckoutScreen.route);
-                    },
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Checkout'),
-                        SizedBox(width: 10),
-                        Icon(Icons.arrow_forward_rounded),
-                      ],
-                    ))
+                  onPressed: () {
+                    GoRouter.of(context).push(CheckoutScreen.route);
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Checkout'),
+                      SizedBox(width: 10),
+                      Icon(Icons.arrow_forward_rounded),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -215,33 +213,6 @@ class CartProductContainer extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class SummaryLine extends StatelessWidget {
-  const SummaryLine({
-    super.key,
-    this.leadingText,
-    this.trailingText,
-  });
-  final String? leadingText, trailingText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          '$leadingText',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        Text('$trailingText',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(fontWeight: FontWeight.w600)),
-      ],
     );
   }
 }
