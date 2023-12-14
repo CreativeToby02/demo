@@ -186,3 +186,41 @@ class SummaryLine extends StatelessWidget {
     );
   }
 }
+
+class AccountOptions extends StatelessWidget {
+  const AccountOptions({
+    super.key,
+    this.optionType,
+    this.icon,
+    this.onPressed,
+  });
+  final String? optionType;
+  final IconData? icon;
+  final Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: onPressed,
+      child: Container(
+        margin: const EdgeInsets.only(top: 25, left: 30, right: 30, bottom: 25),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(icon),
+                const SizedBox(width: 20),
+                Text(
+                  '$optionType',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+              ],
+            ),
+            const Icon(Icons.arrow_forward_ios_rounded),
+          ],
+        ),
+      ),
+    );
+  }
+}

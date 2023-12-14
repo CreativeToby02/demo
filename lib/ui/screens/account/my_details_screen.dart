@@ -1,11 +1,34 @@
+import 'package:demo_app/core/utils/shared_preferences_keys.dart';
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyDetailsScreen extends StatelessWidget {
+class MyDetailsScreen extends StatefulWidget {
   static const String name = 'my-details';
   static const String route = '/my-details';
   const MyDetailsScreen({super.key});
+
+  @override
+  State<MyDetailsScreen> createState() => _MyDetailsScreenState();
+}
+
+class _MyDetailsScreenState extends State<MyDetailsScreen> {
+  String? userName;
+
+  getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    userName = prefs.getString(SharedPrefKeys.userName);
+    return userName;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUsername();
+    print(userName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +55,11 @@ class MyDetailsScreen extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
+                SizedBox(
                   height: 53,
-                  child: StoreTextField(),
+                  child: StoreTextField(
+                    hintText: userName,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(

@@ -166,33 +166,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(context)
-                                    .push(ProductDetailScreen.route);
-                              },
-                              child: ProductSale(
-                                isSelected: savedItem,
+                            Expanded(
+                              child: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    savedItem = !savedItem;
-                                  });
+                                  GoRouter.of(context)
+                                      .push(ProductDetailScreen.route);
                                 },
+                                child: ProductSale(
+                                  isSelected: savedItem,
+                                  onTap: () {
+                                    setState(() {
+                                      savedItem = !savedItem;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                             const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(context)
-                                    .push(ProductDetailScreen.route);
-                              },
-                              child: ProductSale(
-                                isSelected: savedItem,
+                            Expanded(
+                              child: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    savedItem = !savedItem;
-                                  });
+                                  GoRouter.of(context)
+                                      .push(ProductDetailScreen.route);
                                 },
+                                child: ProductSale(
+                                  isSelected: savedItem,
+                                  onTap: () {
+                                    setState(() {
+                                      savedItem = !savedItem;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ],
@@ -201,33 +205,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(context)
-                                    .push(ProductDetailScreen.route);
-                              },
-                              child: ProductSale(
-                                isSelected: savedItem,
+                            Expanded(
+                              child: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    savedItem = !savedItem;
-                                  });
+                                  GoRouter.of(context)
+                                      .push(ProductDetailScreen.route);
                                 },
+                                child: ProductSale(
+                                  isSelected: savedItem,
+                                  onTap: () {
+                                    setState(() {
+                                      savedItem = !savedItem;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                             const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(context)
-                                    .push(ProductDetailScreen.route);
-                              },
-                              child: ProductSale(
-                                isSelected: savedItem,
+                            Expanded(
+                              child: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    savedItem = !savedItem;
-                                  });
+                                  GoRouter.of(context)
+                                      .push(ProductDetailScreen.route);
                                 },
+                                child: ProductSale(
+                                  isSelected: savedItem,
+                                  onTap: () {
+                                    setState(() {
+                                      savedItem = !savedItem;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ],
@@ -236,33 +244,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(context)
-                                    .push(ProductDetailScreen.route);
-                              },
-                              child: ProductSale(
-                                isSelected: savedItem,
+                            Expanded(
+                              child: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    savedItem = !savedItem;
-                                  });
+                                  GoRouter.of(context)
+                                      .push(ProductDetailScreen.route);
                                 },
+                                child: ProductSale(
+                                  isSelected: savedItem,
+                                  onTap: () {
+                                    setState(() {
+                                      savedItem = !savedItem;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                             const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                GoRouter.of(context)
-                                    .push(ProductDetailScreen.route);
-                              },
-                              child: ProductSale(
-                                isSelected: savedItem,
+                            Expanded(
+                              child: GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    savedItem = !savedItem;
-                                  });
+                                  GoRouter.of(context)
+                                      .push(ProductDetailScreen.route);
                                 },
+                                child: ProductSale(
+                                  isSelected: savedItem,
+                                  onTap: () {
+                                    setState(() {
+                                      savedItem = !savedItem;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ],

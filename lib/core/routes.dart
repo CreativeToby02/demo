@@ -5,6 +5,9 @@ import 'package:demo_app/ui/screens/account/my_details_screen.dart';
 import 'package:demo_app/ui/screens/account/my_orders_screen.dart';
 import 'package:demo_app/ui/screens/account/notification_setting_screen.dart';
 import 'package:demo_app/ui/screens/account/payment_method_screen.dart';
+import 'package:demo_app/ui/screens/authentication/auth_page.dart';
+import 'package:demo_app/ui/screens/authentication/login/login_screen.dart';
+import 'package:demo_app/ui/screens/authentication/signup/signup_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/confirm_email_code_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/enter_code_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/forgot_password_screen.dart';
@@ -19,19 +22,23 @@ import 'package:demo_app/ui/screens/home/review_screen.dart';
 import 'package:demo_app/ui/screens/home/saved_item_screen.dart';
 import 'package:demo_app/ui/screens/home/search_screen.dart';
 import 'package:demo_app/ui/screens/home/user_account_screen.dart';
-import 'package:demo_app/ui/screens/login/login_screen.dart';
-import 'package:demo_app/ui/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter routes = GoRouter(
-  initialLocation: SignupScreen.route,
+  initialLocation: AuthPageScreen.route,
   routes: <GoRoute>[
     GoRoute(
       path: BottomNavigator.route,
       name: BottomNavigator.name,
       builder: (BuildContext context, GoRouterState state) =>
           const BottomNavigator(),
+    ),
+    GoRoute(
+      path: AuthPageScreen.route,
+      name: AuthPageScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const AuthPageScreen(),
     ),
     GoRoute(
       path: SignupScreen.route,

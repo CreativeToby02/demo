@@ -13,48 +13,54 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StoreAppBar(title: 'Details'),
+      appBar: const StoreAppBar(title: 'Details'),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 58,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Price', style: Theme.of(context).textTheme.bodyLarge),
-                    Text(
-                      'PKR 1,190',
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium
-                          ?.copyWith(fontSize: 24),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 58,
-                  width: 191,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xFF000000)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(
-                        'assets/icons/shopping-bag.svg',
-                        color: const Color(0xFFFFFFFF),
+                      Text('Price',
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      Text(
+                        'PKR 1,190',
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.copyWith(fontSize: 24),
                       ),
-                      const SizedBox(width: 10),
-                      Text('Add to cart',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(color: const Color(0xFFFFFFFF))),
                     ],
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Container(
+                    height: 58,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFF000000)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/shopping-bag.svg',
+                          color: const Color(0xFFFFFFFF),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Add to cart',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(color: const Color(0xFFFFFFFF))),
+                      ],
+                    ),
                   ),
                 )
               ],

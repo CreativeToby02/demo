@@ -87,6 +87,7 @@ class AddressScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () => showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (context) {
                         return const AddAddressBottomSheet();
                       }),

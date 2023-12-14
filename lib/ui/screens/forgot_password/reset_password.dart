@@ -1,6 +1,6 @@
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
-import 'package:demo_app/ui/screens/login/login_screen.dart';
+import 'package:demo_app/ui/screens/authentication/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

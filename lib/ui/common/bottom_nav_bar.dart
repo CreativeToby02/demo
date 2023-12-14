@@ -9,7 +9,7 @@ import 'package:svg_flutter/svg.dart';
 
 class BottomNavigator extends StatefulWidget {
   static const String name = 'bottom-navigator';
-  static const String route = '/bottom-navigator';
+  static const String route = '/bottom-navigator/:id';
   const BottomNavigator({super.key});
 
   @override
@@ -37,6 +37,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           });
         },
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.black,
         showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
