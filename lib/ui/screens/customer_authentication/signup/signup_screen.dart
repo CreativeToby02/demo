@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
 import 'package:demo_app/core/utils/shared_preferences_keys.dart';
+import 'package:demo_app/ui/screens/customer_authentication/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:demo_app/ui/common/bottom_nav_bar.dart';
 import 'package:demo_app/ui/common/text_field.dart';
@@ -207,7 +208,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                const GoogleAuthButton(
+                GoogleAuthButton(
+                  onTap: () => AuthService().signInWithGoogle(),
                   title: 'Sign Up with Google',
                 ),
                 const SizedBox(height: 60),

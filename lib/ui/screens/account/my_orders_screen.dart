@@ -35,7 +35,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const StoreAppBar(title: 'My Orders'),
+      appBar: const StoreAppBar(
+        title: 'My Orders',
+        icon: SizedBox(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -187,7 +190,7 @@ class OngoingOrderContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               image: const DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage('assets/images/image 1.png'),
+                image: AssetImage('assets/images/T-shirt.png'),
               ),
             ),
           ),
@@ -298,7 +301,7 @@ class CompletedOrderContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               image: const DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage('assets/images/image 1.png'),
+                image: AssetImage('assets/images/Coat.png'),
               ),
             ),
           ),

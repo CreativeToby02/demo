@@ -1,42 +1,37 @@
-import 'package:demo_app/core/utils/shared_preferences_keys.dart';
+import 'package:demo_app/ui/common/alert_dailog_widgets.dart';
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class MyDetailsScreen extends StatefulWidget {
-  static const String name = 'my-details';
-  static const String route = '/my-details';
-  const MyDetailsScreen({super.key});
+class VendorDetailsScreen extends StatefulWidget {
+  static const String name = 'vendor-details';
+  static const String route = '/vendor-details';
+  const VendorDetailsScreen({super.key});
 
   @override
-  State<MyDetailsScreen> createState() => _MyDetailsScreenState();
+  State<VendorDetailsScreen> createState() => _VendorDetailsScreenState();
 }
 
-class _MyDetailsScreenState extends State<MyDetailsScreen> {
-  String? userName;
-
-  getUsername() async {
-    final prefs = await SharedPreferences.getInstance();
-    userName = prefs.getString(SharedPrefKeys.userName);
-    return userName;
-  }
-
+class _VendorDetailsScreenState extends State<VendorDetailsScreen> {
   final dateInput = TextEditingController();
+  final fullName = TextEditingController();
+  final email = TextEditingController();
+  final gender = TextEditingController();
+  final phoneNumber = TextEditingController();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getUsername();
-    print(userName);
+  void _showLogoutAlertDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return VendorLogoutAlertDialog();
+        },);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const StoreAppBar(
-        title: 'My Details',
+        title: 'Vendor Details',
         icon: SizedBox(),
       ),
       body: SafeArea(
@@ -63,7 +58,8 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                 SizedBox(
                   height: 53,
                   child: StoreTextField(
-                    hintText: userName,
+                    hintText: 'userName',
+                    controller: fullName,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -74,21 +70,11 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                       ),
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
-                  height: 53,
-                  child: StoreTextField(),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Date of Birth',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-                const SizedBox(height: 10),
                 SizedBox(
                   height: 53,
-                  child: DatePickerField(dateInput: dateInput),
+                  child: StoreTextField(
+                    controller: email,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -111,20 +97,24 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  height: 53,
-                  child: DropdownMenuItem(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF000000).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
+                    height: 53,
+                    child: StoreTextField(
+                      controller: phoneNumber,
+                      keyboardType: TextInputType.phone,
+                    )),
                 const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: () {},
                   child: const Text('Submit'),
+                ),
+                const SizedBox(height: 50),
+                ElevatedButton(
+                  onPressed: () {
+                     setState(() {
+                    _showLogoutAlertDialog();
+                  });
+                  },
+                  child: const Text('Logout'),
                 )
               ],
             ),

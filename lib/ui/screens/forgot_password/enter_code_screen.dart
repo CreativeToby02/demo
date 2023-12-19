@@ -12,63 +12,65 @@ class EnterCodeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ReturnButton(),
-              Text(
-                'Enter 4-Digit Code',
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              const SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                    text:
-                        'Enter 4 digit code that you receive on your \nemail (',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    children: [
-                      TextSpan(
-                        text: 'theboy6@example.com',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge
-                            ?.copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      TextSpan(
-                        text: ')',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ]),
-              ),
-              const SizedBox(height: 40),
-              OtpForm(),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Email not Received? ',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  Text(
-                    'Resend code',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 100),
-              ElevatedButton(
-                  onPressed: () {
-                    GoRouter.of(context)
-                        .push(EmailCodeConfirmationScreen.route);
-                  },
-                  child: const Text('Continue')),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ReturnButton(),
+                Text(
+                  'Enter 4-Digit Code',
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                const SizedBox(height: 20),
+                RichText(
+                  text: TextSpan(
+                      text:
+                          'Enter 4 digit code that you receive on your \nemail (',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      children: [
+                        TextSpan(
+                          text: 'theboy6@example.com',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        TextSpan(
+                          text: ')',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ]),
+                ),
+                const SizedBox(height: 40),
+                OtpForm(),
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Email not Received? ',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Text(
+                      'Resend code',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 100),
+                ElevatedButton(
+                    onPressed: () {
+                      GoRouter.of(context)
+                          .push(EmailCodeConfirmationScreen.route);
+                    },
+                    child: const Text('Continue')),
+              ],
+            ),
           ),
         ),
       ),

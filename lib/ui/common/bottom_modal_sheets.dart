@@ -1,7 +1,10 @@
+import 'package:demo_app/core/models/address.dart';
+import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/screens/home/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class AddAddressBottomSheet extends StatefulWidget {
   const AddAddressBottomSheet({
@@ -13,6 +16,11 @@ class AddAddressBottomSheet extends StatefulWidget {
 }
 
 class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
+  void addToAddress(Address address) {
+    final store = context.read<Store>();
+    store.addToAddress(address);
+  }
+
   void _showAlertDialog() {
     showDialog(
         context: context,
@@ -42,6 +50,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                 ElevatedButton(
                     onPressed: () {
                       GoRouter.of(context).push(CheckoutScreen.route);
+                      context.pop();
                     },
                     child: const Text('Thanks'))
               ],
@@ -49,6 +58,19 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
           );
         });
   }
+
+  final _addressNickname = TextEditingController();
+  final _addressFullname = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _addressFullname.dispose();
+    _addressNickname.dispose();
+  }
+
+  bool active = true;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +105,9 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                   .bodyLarge
                   ?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const StoreTextFormField(),
+            StoreTextFormField(
+              controller: _addressNickname,
+            ),
             const SizedBox(height: 20),
             Text(
               'Full Address',
@@ -92,14 +116,18 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                   .bodyLarge
                   ?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const StoreTextFormField(),
+            StoreTextFormField(
+              controller: _addressFullname,
+            ),
             const SizedBox(height: 20),
             Row(
               children: [
                 Checkbox(
-                    value: true,
+                    value: active,
                     activeColor: Colors.black,
-                    onChanged: (value) {}),
+                    onChanged: (value) {
+                      active = value!;
+                    }),
                 Text(
                   'Make this as a default address',
                   style: Theme.of(context)
@@ -113,6 +141,12 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
             ElevatedButton(
               onPressed: () {
                 _showAlertDialog();
+                addToAddress(
+                  Address(
+                    addressName: _addressNickname.text,
+                    addressFullname: _addressFullname.text,
+                  ),
+                );
               },
               child: const Text('Add'),
             ),

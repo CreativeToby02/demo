@@ -5,7 +5,9 @@ import 'package:svg_flutter/svg_flutter.dart';
 class ReviewScreen extends StatelessWidget {
   static const String name = 'review';
   static const String route = '/review';
-  const ReviewScreen({super.key});
+  const ReviewScreen({super.key, this.productRating});
+
+  final String? productRating;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class ReviewScreen extends StatelessWidget {
                 children: [
                   const SizedBox(width: 30),
                   Text(
-                    '4.0',
+                    '$productRating',
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
                           fontWeight: FontWeight.w900,
                           fontSize: 32,

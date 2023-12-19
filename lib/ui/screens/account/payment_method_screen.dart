@@ -1,7 +1,9 @@
+import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/common/widgets.dart';
 import 'package:demo_app/ui/screens/account/add_new_card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class PaymentMethodScreen extends StatelessWidget {
   static const String name = 'payment-method';
@@ -10,8 +12,14 @@ class PaymentMethodScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
+    final store = context.read<Store>();
+    //
     return Scaffold(
-      appBar: const StoreAppBar(title: 'Payment Method'),
+      appBar: const StoreAppBar(
+        title: 'Payment Method',
+        icon: SizedBox(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -33,46 +41,18 @@ class PaymentMethodScreen extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xFF797979),
-                      width: 0.4,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'VISA   ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                          ),
-                          Text(
-                            '**** **** **** 2134',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                          )
-                        ],
-                      ),
-                      const Icon(Icons.radio_button_checked)
-                    ],
+                SizedBox(
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: store.creditCardItem.length,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return CreditCardContainer(
+                        cardName: store.creditCardItem[index].cardName,
+                        cardDigits: store.creditCardItem[index].cardDigits,
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),

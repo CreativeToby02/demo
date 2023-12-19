@@ -1,5 +1,5 @@
-import 'package:demo_app/ui/screens/authentication/login/login_screen.dart';
-import 'package:demo_app/ui/screens/authentication/signup/signup_screen.dart';
+import 'package:demo_app/ui/screens/customer_authentication/login/login_screen.dart';
+import 'package:demo_app/ui/screens/customer_authentication/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrSignUpScreen extends StatefulWidget {

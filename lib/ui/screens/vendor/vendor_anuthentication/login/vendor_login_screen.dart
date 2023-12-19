@@ -1,24 +1,25 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:demo_app/ui/common/bottom_nav_bar.dart';
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
+import 'package:demo_app/ui/screens/customer_authentication/auth_service.dart';
 import 'package:demo_app/ui/screens/forgot_password/forgot_password_screen.dart';
+import 'package:demo_app/ui/screens/vendor/home/vendor_bottom_nav_bar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const String name = 'login';
-  static const String route = '/login';
-  const LoginScreen({super.key, this.onTap});
+class VendorLoginScreen extends StatefulWidget {
+  static const String name = 'vendor-login';
+  static const String route = '/vendor-login';
+  const VendorLoginScreen({super.key, this.onTap});
   final Function()? onTap;
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<VendorLoginScreen> createState() => _VendorLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _VendorLoginScreenState extends State<VendorLoginScreen> {
   bool isLoading = false;
   bool revealPassword = true;
   final _emailController = TextEditingController();
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       // ignore: unnecessary_null_comparison
       if (_auth.currentUser != null) {
-        GoRouter.of(context).go(BottomNavigator.route);
+        GoRouter.of(context).go(VendorBottomNavigator.route);
       }
     } on FirebaseAuthException catch (e) {
       displayErrorMessage(e.code);
@@ -96,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Login to your account',
+                  'Login to your vendor account',
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(height: 20),
@@ -167,19 +168,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (!currentFocus.hasPrimaryFocus) {
                       currentFocus.unfocus();
                     }
-                    setState(() {
-                      isLoading = !isLoading;
-                    });
                     loginUser();
-                    setState(() {
-                      isLoading = !isLoading;
-                    });
                   },
-                  child: isLoading == true
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : const Text('Login'),
+                  child: const Text('Login'),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -203,7 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                const GoogleAuthButton(
+                GoogleAuthButton(
+                  onTap: () async => await AuthService().signInWithGoogle(),
                   title: 'Login with Google',
                 ),
                 const SizedBox(height: 100),
