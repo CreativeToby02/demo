@@ -1,3 +1,4 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/core/routes.dart';
 import 'package:demo_app/firebase_options.dart';
@@ -8,6 +9,10 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Future.delayed(const Duration(seconds: 3));
+  FlutterNativeSplash.remove();
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
