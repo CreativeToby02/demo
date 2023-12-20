@@ -8,7 +8,7 @@ on:
         - main
         - master
         - develop
-name: "Test, Build & Release"
+name: "Test, Build & Release Now"
 jobs:
     build:
       name: Build & Release
