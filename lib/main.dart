@@ -1,10 +1,27 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/core/routes.dart';
+import 'package:demo_app/firebase_options.dart';
 import 'package:demo_app/ui/theme/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
-   const MyApp();
+  await Future.delayed(const Duration(seconds: 3));
+  FlutterNativeSplash.remove();
+  
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Store(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

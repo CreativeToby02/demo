@@ -1,8 +1,10 @@
-import 'package:demo_app/ui/common/bottom_nav_bar.dart';
+import 'package:demo_app/core/models/credit_card.dart';
+import 'package:demo_app/core/models/store.dart';
+import 'package:demo_app/ui/common/alert_dailog_widgets.dart';
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class AddNewCardScreen extends StatefulWidget {
   static const String name = 'add-new-card';
@@ -14,49 +16,37 @@ class AddNewCardScreen extends StatefulWidget {
 }
 
 class _AddNewCardScreenState extends State<AddNewCardScreen> {
+  void addToCreditCard(CreditCard creditCard) {
+    final store = context.read<Store>();
+    store.addToCreditCard(creditCard);
+  }
+
   void _showAlertDialog() {
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  'Congratulations!',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Your new card has been added',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
-                    GoRouter.of(context).push(BottomNavigator.route);
-                    context.pop();
-                  },
-                  child: const Text('Thanks'),
-                ),
-              ],
-            ),
-          );
+          return const AddNewCardAlertDialog();
         });
+  }
+
+  final _cardName = TextEditingController();
+  final _cardDigits = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _cardDigits.dispose();
+    _cardName.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const StoreAppBar(title: 'New Card'),
+      appBar: const StoreAppBar(
+        title: 'New Card',
+        icon: SizedBox(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -85,10 +75,11 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                       ),
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
+                SizedBox(
                   height: 53,
                   child: StoreTextField(
                     hintText: '**** **** **** 1234',
+                    controller: _cardDigits,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -151,6 +142,10 @@ class _AddNewCardScreenState extends State<AddNewCardScreen> {
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     onPressed: () {
+                      addToCreditCard(CreditCard(
+                        cardName: _cardName.text,
+                        cardDigits: _cardDigits.text,
+                      ));
                       _showAlertDialog();
                     },
                     child: const Text('Apply'),

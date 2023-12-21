@@ -10,7 +10,10 @@ class NotificationSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const StoreAppBar(title: 'Notification'),
+      appBar: const StoreAppBar(
+        title: 'Notification',
+        icon: SizedBox(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

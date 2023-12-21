@@ -1,90 +1,81 @@
+import 'package:demo_app/core/models/product.dart';
+import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/common/widgets.dart';
 import 'package:demo_app/ui/screens/home/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   static const String name = 'cart';
   static const String route = '/cart';
   const CartScreen({super.key});
 
   @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  // late final Product product;
+  // int index = 0;
+  // int createIndex() {
+  //   for (int _index = 0; _index < 5; _index++) {
+  //     index = _index;
+  //   }
+  //   return index;
+  // }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'My Cart'),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Divider(
-                  height: 2,
-                  color: Colors.black26,
-                ),
-                const SizedBox(height: 20),
-                // EmptyCartDialog(),
-                const CartProductContainer(),
-                const CartProductContainer(),
-                const SizedBox(height: 20),
-                Container(
-                  height: 55,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF2F2F2),
-                    borderRadius: BorderRadius.circular(5),
+    // final store = context.read<Store>();
+    // final productMenu = store.productMenu;
+    return Consumer<Store>(
+      builder: (context, store, child) => Scaffold(
+        appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'My Cart'),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(
+                    height: 2,
+                    color: Colors.black26,
                   ),
-                  child: Text(
-                    'Add Voucher',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  const SizedBox(height: 20),
+                  store.cart.isEmpty
+                      ? const EmptyCartDialog()
+                      : const SizedBox(),
+                  SizedBox(
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: store.cart.length,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final Product product = store.cart[index];
+
+                        final String productName = product.name;
+
+                        final String productPrice = product.price;
+
+                        return CartProductContainer(
+                          product: product,
+                          productName: productName,
+                          productPrice: productPrice,
+                        );
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                const SummaryLine(
-                  leadingText: 'Sub-total',
-                  trailingText: 'PKR 5,870',
-                ),
-                const SizedBox(height: 20),
-                const SummaryLine(
-                  leadingText: 'VAT (%)',
-                  trailingText: 'PKR 5,870',
-                ),
-                const SizedBox(height: 20),
-                const SummaryLine(
-                  leadingText: 'Shipping fee',
-                  trailingText: 'PKR 5,870',
-                ),
-                const SizedBox(height: 20),
-                const Divider(
-                  height: 2,
-                ),
-                const SizedBox(height: 10),
-                const SummaryLine(
-                  leadingText: 'Total',
-                  trailingText: 'PKR 5,870',
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  height: 2,
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    GoRouter.of(context).push(CheckoutScreen.route);
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Checkout'),
-                      SizedBox(width: 10),
-                      Icon(Icons.arrow_forward_rounded),
-                    ],
-                  ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  store.cart.isEmpty
+                      ? const SizedBox()
+                      : CheckoutCalculator(
+                          productStrPrice: store.cart[0].price),
+                ],
+              ),
             ),
           ),
         ),
@@ -93,46 +84,48 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-class EmptyCartDialog extends StatelessWidget {
-  const EmptyCartDialog({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          const SizedBox(height: 185),
-          SvgPicture.asset('assets/icons/big-heart.svg'),
-          const SizedBox(height: 5),
-          Text(
-            'Your Cart is Empty',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            'When you add products, they’ll appear here.',
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall
-                ?.copyWith(fontSize: 14),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class CartProductContainer extends StatelessWidget {
+class CartProductContainer extends StatefulWidget {
   const CartProductContainer({
     super.key,
+    required this.productName,
+    required this.productPrice,
+    required this.product,
   });
+  final Product product;
+  final String productName;
+  final String productPrice;
+
+  @override
+  State<CartProductContainer> createState() => _CartProductContainerState();
+}
+
+class _CartProductContainerState extends State<CartProductContainer> {
+  void removeFromCart(Product product, BuildContext context) {
+    final store = context.read<Store>();
+    store.removeFromCart(product);
+  }
+
+  int quantity = 1;
+
+  void decreaseQuantity() {
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+      });
+    }
+  }
+
+  void increaseQuantity() {
+    if (quantity < 5) {
+      setState(() {
+        quantity++;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    int productPrice = quantity * int.parse(widget.productPrice);
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
@@ -152,7 +145,10 @@ class CartProductContainer extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(5),
             ),
-            child: Image.asset('assets/images/image 1.png'),
+            child: Image.asset(
+              'assets/images/${widget.productName}.png',
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(width: 20),
           Expanded(
@@ -163,15 +159,18 @@ class CartProductContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'REGULAR FIT SLOGAN',
+                      widget.productName,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                             fontSize: 14,
                           ),
                     ),
-                    SvgPicture.asset(
-                      'assets/icons/delete-icon.svg',
-                      height: 20,
-                      width: 20,
+                    GestureDetector(
+                      onTap: () => removeFromCart(widget.product, context),
+                      child: SvgPicture.asset(
+                        'assets/icons/delete-icon.svg',
+                        height: 20,
+                        width: 20,
+                      ),
                     ),
                   ],
                 ),
@@ -187,22 +186,24 @@ class CartProductContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'PKR 1,100',
+                      '# $productPrice',
                       style: Theme.of(context)
                           .textTheme
                           .displaySmall
                           ?.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                     ),
-                    const Row(
+                    Row(
                       children: [
                         QuantitySelectionButton(
                           selectionType: '-',
+                          onTap: () => decreaseQuantity(),
                         ),
-                        SizedBox(width: 10),
-                        Text('2'),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
+                        Text('$quantity'),
+                        const SizedBox(width: 10),
                         QuantitySelectionButton(
                           selectionType: '+',
+                          onTap: () => increaseQuantity(),
                         ),
                       ],
                     ),
@@ -217,30 +218,85 @@ class CartProductContainer extends StatelessWidget {
   }
 }
 
-class QuantitySelectionButton extends StatelessWidget {
-  const QuantitySelectionButton({
+class CheckoutCalculator extends StatefulWidget {
+  const CheckoutCalculator({
     super.key,
-    this.selectionType,
+    required this.productStrPrice,
   });
-  final String? selectionType;
+
+  final String productStrPrice;
+
+  @override
+  State<CheckoutCalculator> createState() => _CheckoutCalculatorState();
+}
+
+class _CheckoutCalculatorState extends State<CheckoutCalculator> {
+  late int productPrice = int.parse(widget.productStrPrice);
+
+  int vatPrice = 100;
+  int shippingPrice = 500;
+  late int productTotalPrice = vatPrice + shippingPrice + productPrice;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 22,
-      width: 22,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color(0xFF000000).withOpacity(0.4),
+    return Column(
+      children: [
+        Container(
+          height: 55,
+          width: double.infinity,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF2F2F2),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Text(
+            'Add Voucher',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Center(
-        child: Text(
-          '$selectionType',
-          style: const TextStyle(fontSize: 18),
+        const SizedBox(height: 30),
+        SummaryLine(
+          leadingText: 'Sub-total',
+          trailingText: '# $productPrice',
         ),
-      ),
+        const SizedBox(height: 20),
+        SummaryLine(
+          leadingText: 'VAT (%)',
+          trailingText: '# $vatPrice',
+        ),
+        const SizedBox(height: 20),
+        SummaryLine(
+          leadingText: 'Shipping fee',
+          trailingText: '# $shippingPrice',
+        ),
+        const SizedBox(height: 20),
+        const Divider(
+          height: 2,
+        ),
+        const SizedBox(height: 10),
+        SummaryLine(
+          leadingText: 'Total',
+          trailingText: '# $productTotalPrice',
+        ),
+        const SizedBox(height: 10),
+        const Divider(
+          height: 2,
+        ),
+        const SizedBox(height: 30),
+        ElevatedButton(
+          onPressed: () {
+            GoRouter.of(context).push(CheckoutScreen.route);
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Checkout'),
+              SizedBox(width: 10),
+              Icon(Icons.arrow_forward_rounded),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

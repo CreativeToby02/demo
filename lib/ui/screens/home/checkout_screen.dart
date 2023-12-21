@@ -51,7 +51,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StoreAppBar(title: 'Checkout'),
+      appBar: const StoreAppBar(title: 'Checkout'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -151,47 +151,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 GestureDetector(
                   onTap: () =>
                       GoRouter.of(context).push(PaymentMethodScreen.route),
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xFF797979),
-                        width: 0.4,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'VISA   ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            ),
-                            Text(
-                              '**** **** **** 2134',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            )
-                          ],
-                        ),
-                        const Icon(Icons.mode_edit_outlined)
-                      ],
-                    ),
+                  child: const CreditCardContainer(
+                    cardName: 'VISA',
+                    cardDigits: '**** **** **** 1234',
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -204,17 +166,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const SizedBox(height: 30),
                 const SummaryLine(
                   leadingText: 'Sub-total',
-                  trailingText: 'PKR 5,870',
+                  trailingText: '# 5,870',
                 ),
                 const SizedBox(height: 20),
                 const SummaryLine(
                   leadingText: 'VAT (%)',
-                  trailingText: 'PKR 5,870',
+                  trailingText: '# 5,870',
                 ),
                 const SizedBox(height: 20),
                 const SummaryLine(
                   leadingText: 'Shipping fee',
-                  trailingText: 'PKR 5,870',
+                  trailingText: '# 5,870',
                 ),
                 const SizedBox(height: 20),
                 const Divider(
@@ -223,7 +185,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const SizedBox(height: 10),
                 const SummaryLine(
                   leadingText: 'Total',
-                  trailingText: 'PKR 5,870',
+                  trailingText: '# 5,870',
                 ),
                 const SizedBox(height: 10),
                 const Divider(
@@ -286,59 +248,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class PaymentMethodOption extends StatelessWidget {
-  const PaymentMethodOption({
-    super.key,
-    this.icon,
-    this.title,
-    this.onTap,
-    this.isSelected,
-  });
-
-  final IconData? icon;
-  final String? title;
-  final Function()? onTap;
-  final bool? isSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 45,
-        width: 100,
-        decoration: BoxDecoration(
-          color: isSelected == true ? Colors.black : Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: isSelected == false
-              ? Border.all(
-                  color: const Color(0xFF797979),
-                  width: 0.4,
-                )
-              : null,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: isSelected == true ? Colors.white : Colors.black,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              '$title',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: isSelected == true ? Colors.white : Colors.black,
-                    fontSize: 14,
-                  ),
-            ),
-          ],
         ),
       ),
     );

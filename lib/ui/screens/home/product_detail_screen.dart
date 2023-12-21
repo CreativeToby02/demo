@@ -1,60 +1,121 @@
 // ignore_for_file: deprecated_member_use
+import 'package:demo_app/core/models/product.dart';
+import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/screens/home/review_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/ui/common/widgets.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   static const String name = 'product-detail';
   static const String route = '/product-detail';
-  const ProductDetailScreen({super.key});
+  const ProductDetailScreen(
+      {super.key, required this.product, required this.index});
+
+  final Product product;
+  final int index;
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  void addToCart() {
+    final store = context.read<Store>();
+    if (store.cart.contains(store.productMenu[widget.index])) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          content: const Text('Item is already added to cart'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.done),
+            ),
+          ],
+        ),
+      );
+    } else {
+      store.addToCart(widget.product);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          content: const Text('Successfully added to cart'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.done),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StoreAppBar(title: 'Details'),
+      appBar: const StoreAppBar(
+        title: 'Details',
+        icon: SizedBox(),
+      ),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 58,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Price', style: Theme.of(context).textTheme.bodyLarge),
-                    Text(
-                      'PKR 1,190',
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium
-                          ?.copyWith(fontSize: 24),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 58,
-                  width: 191,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xFF000000)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(
-                        'assets/icons/shopping-bag.svg',
-                        color: const Color(0xFFFFFFFF),
+                      Text('Price',
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      Text(
+                        '# ${widget.product.price}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.copyWith(fontSize: 24),
                       ),
-                      const SizedBox(width: 10),
-                      Text('Add to cart',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(color: const Color(0xFFFFFFFF))),
                     ],
+                  ),
+                ),
+                const SizedBox(width: 20),
+                MaterialButton(
+                  onPressed: () => addToCart(),
+                  child: Container(
+                    height: 58,
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFF000000)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/shopping-bag.svg',
+                          color: const Color(0xFFFFFFFF),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Add to cart',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(color: const Color(0xFFFFFFFF))),
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -75,13 +136,15 @@ class ProductDetailScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
                 const SizedBox(height: 10),
-                const ProductSaleDetail(),
+                ProductSaleDetail(
+                  productImage: widget.product.imagePath,
+                ),
                 const SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Regular fit slogan',
+                      widget.product.name,
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium
@@ -89,8 +152,11 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     GestureDetector(
-                      onTap: () =>
-                          GoRouter.of(context).push(ReviewScreen.route),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return ReviewScreen(
+                            productRating: widget.product.rating);
+                      })),
                       child: Row(
                         children: [
                           const Icon(
@@ -98,7 +164,7 @@ class ProductDetailScreen extends StatelessWidget {
                             color: Color(0xFFFFA928),
                           ),
                           const SizedBox(width: 6),
-                          Text('4.5/5 (45 reviews)',
+                          Text('${widget.product.rating}/5 (45 reviews)',
                               style: Theme.of(context).textTheme.displaySmall),
                         ],
                       ),
@@ -118,60 +184,18 @@ class ProductDetailScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     const Row(
                       children: [
-                        SizeOption(
+                        ProductSizeOption(
                           size: 'S',
                         ),
-                        SizeOption(
+                        ProductSizeOption(
                           size: 'M',
                         ),
-                        SizeOption(
+                        ProductSizeOption(
                           size: 'L',
                         ),
                       ],
                     ),
                     const SizedBox(height: 30),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Text('Price',
-                    //             style: Theme.of(context).textTheme.bodyLarge),
-                    //         Text(
-                    //           'PKR 1,190',
-                    //           style: Theme.of(context)
-                    //               .textTheme
-                    //               .displayMedium
-                    //               ?.copyWith(fontSize: 24),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     Container(
-                    //       height: 58,
-                    //       width: 191,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(10),
-                    //           color: const Color(0xFF000000)),
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: [
-                    //           SvgPicture.asset(
-                    //             'assets/icons/shopping-bag.svg',
-                    //             color: const Color(0xFFFFFFFF),
-                    //           ),
-                    //           const SizedBox(width: 10),
-                    //           Text('Add to cart',
-                    //               style: Theme.of(context)
-                    //                   .textTheme
-                    //                   .displaySmall
-                    //                   ?.copyWith(
-                    //                       color: const Color(0xFFFFFFFF))),
-                    //         ],
-                    //       ),
-                    //     )
-                    //   ],
-                    // )
                   ],
                 )
               ],
@@ -183,44 +207,16 @@ class ProductDetailScreen extends StatelessWidget {
   }
 }
 
-class SizeOption extends StatelessWidget {
-  const SizeOption({
-    super.key,
-    this.size,
-  });
-  final String? size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 44,
-      width: 33,
-      margin: const EdgeInsets.only(right: 25, left: 10),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black,
-          width: 0.3,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          '$size',
-          style:
-              Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
 class ProductSaleDetail extends StatelessWidget {
   const ProductSaleDetail({
     super.key,
     this.isSelected,
     this.onTap,
+    required this.productImage,
   });
   final bool? isSelected;
   final Function()? onTap;
+  final String productImage;
 
   @override
   Widget build(BuildContext context) {
@@ -233,9 +229,9 @@ class ProductSaleDetail extends StatelessWidget {
             width: 400,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
+              image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage('assets/images/image 1.png'),
+                image: AssetImage('assets/images/$productImage.png'),
               ),
             ),
             child: Align(

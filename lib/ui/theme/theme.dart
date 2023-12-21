@@ -56,7 +56,7 @@ final ThemeData LightTheme = ThemeData(
     style: ButtonStyle(
       elevation: MaterialStateProperty.all(0.0),
       foregroundColor: MaterialStateProperty.all(
-        const Color(0xFFEEEEEE),
+        const Color(0xFFFFFFFF),
       ),
       backgroundColor: MaterialStateProperty.all(
         const Color(0xFF000000),
@@ -75,7 +75,7 @@ final ThemeData LightTheme = ThemeData(
     backgroundColor: Color(0xFF000000),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: Color(0xFFFFFAF5),
+    backgroundColor: Color(0xFFFFFFFF),
     titleTextStyle: TextStyle(
         fontFamily: 'Avenir',
         color: Color(0xFF000000),

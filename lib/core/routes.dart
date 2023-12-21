@@ -5,6 +5,9 @@ import 'package:demo_app/ui/screens/account/my_details_screen.dart';
 import 'package:demo_app/ui/screens/account/my_orders_screen.dart';
 import 'package:demo_app/ui/screens/account/notification_setting_screen.dart';
 import 'package:demo_app/ui/screens/account/payment_method_screen.dart';
+import 'package:demo_app/ui/screens/customer_authentication/auth_page.dart';
+import 'package:demo_app/ui/screens/customer_authentication/login/login_screen.dart';
+import 'package:demo_app/ui/screens/customer_authentication/signup/signup_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/confirm_email_code_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/enter_code_screen.dart';
 import 'package:demo_app/ui/screens/forgot_password/forgot_password_screen.dart';
@@ -14,24 +17,40 @@ import 'package:demo_app/ui/screens/home/cart_screen.dart';
 import 'package:demo_app/ui/screens/home/checkout_screen.dart';
 import 'package:demo_app/ui/screens/home/home.dart';
 import 'package:demo_app/ui/screens/home/notification_screen.dart';
-import 'package:demo_app/ui/screens/home/product_detail_screen.dart';
+// import 'package:demo_app/ui/screens/home/product_detail_screen.dart';
 import 'package:demo_app/ui/screens/home/review_screen.dart';
 import 'package:demo_app/ui/screens/home/saved_item_screen.dart';
 import 'package:demo_app/ui/screens/home/search_screen.dart';
 import 'package:demo_app/ui/screens/home/user_account_screen.dart';
-import 'package:demo_app/ui/screens/login/login_screen.dart';
-import 'package:demo_app/ui/screens/signup/signup_screen.dart';
+import 'package:demo_app/ui/screens/vendor/home/vendor_bottom_nav_bar.dart';
+import 'package:demo_app/ui/screens/vendor/home/vendor_details_screen.dart';
+import 'package:demo_app/ui/screens/vendor/vendor_anuthentication/login/vendor_login_screen.dart';
+import 'package:demo_app/ui/screens/vendor/vendor_anuthentication/signup/vendor_signup_screen.dart';
+import 'package:demo_app/ui/screens/vendor/vendor_anuthentication/vendor_auth_page.dart';
+import 'package:demo_app/ui/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter routes = GoRouter(
-  initialLocation: SignupScreen.route,
+  initialLocation: WelcomeScreen.route,
   routes: <GoRoute>[
     GoRoute(
       path: BottomNavigator.route,
       name: BottomNavigator.name,
       builder: (BuildContext context, GoRouterState state) =>
           const BottomNavigator(),
+    ),
+    GoRoute(
+      path: WelcomeScreen.route,
+      name: WelcomeScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const WelcomeScreen(),
+    ),
+    GoRoute(
+      path: AuthPageScreen.route,
+      name: AuthPageScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const AuthPageScreen(),
     ),
     GoRoute(
       path: SignupScreen.route,
@@ -99,12 +118,12 @@ final GoRouter routes = GoRouter(
       builder: (BuildContext context, GoRouterState state) =>
           const UserAccountScreen(),
     ),
-    GoRoute(
-      path: ProductDetailScreen.route,
-      name: ProductDetailScreen.name,
-      builder: (BuildContext context, GoRouterState state) =>
-          const ProductDetailScreen(),
-    ),
+    // GoRoute(
+    //   path: ProductDetailScreen.route,
+    //   name: ProductDetailScreen.name,
+    //   builder: (BuildContext context, GoRouterState state) =>
+    //       const ProductDetailScreen(),
+    // ),
     GoRoute(
       path: ReviewScreen.route,
       name: ReviewScreen.name,
@@ -164,6 +183,36 @@ final GoRouter routes = GoRouter(
       name: HelpCenterScreen.name,
       builder: (BuildContext context, GoRouterState state) =>
           const HelpCenterScreen(),
+    ),
+    GoRoute(
+      path: VendorLoginScreen.route,
+      name: VendorLoginScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const VendorLoginScreen(),
+    ),
+    GoRoute(
+      path: VendorSignupScreen.route,
+      name: VendorSignupScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const VendorSignupScreen(),
+    ),
+    GoRoute(
+      path: VendorAuthPageScreen.route,
+      name: VendorAuthPageScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const VendorAuthPageScreen(),
+    ),
+    GoRoute(
+      path: VendorBottomNavigator.route,
+      name: VendorBottomNavigator.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const VendorBottomNavigator(),
+    ),
+    GoRoute(
+      path: VendorDetailsScreen.route,
+      name: VendorDetailsScreen.name,
+      builder: (BuildContext context, GoRouterState state) =>
+          const VendorDetailsScreen(),
     ),
   ],
 );
