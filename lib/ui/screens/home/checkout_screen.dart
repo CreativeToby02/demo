@@ -166,17 +166,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const SizedBox(height: 30),
                 const SummaryLine(
                   leadingText: 'Sub-total',
-                  trailingText: '# 5,870',
+                  trailingText: '₦5,870',
                 ),
                 const SizedBox(height: 20),
                 const SummaryLine(
                   leadingText: 'VAT (%)',
-                  trailingText: '# 5,870',
+                  trailingText: '₦5,870',
                 ),
                 const SizedBox(height: 20),
                 const SummaryLine(
                   leadingText: 'Shipping fee',
-                  trailingText: '# 5,870',
+                  trailingText: '₦5,870',
                 ),
                 const SizedBox(height: 20),
                 const Divider(
@@ -185,7 +185,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 const SizedBox(height: 10),
                 const SummaryLine(
                   leadingText: 'Total',
-                  trailingText: '# 5,870',
+                  trailingText: '₦5,870',
                 ),
                 const SizedBox(height: 10),
                 const Divider(

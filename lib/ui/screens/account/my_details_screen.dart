@@ -14,12 +14,15 @@ class MyDetailsScreen extends StatefulWidget {
 }
 
 class _MyDetailsScreenState extends State<MyDetailsScreen> {
-  String? userName;
+  String? username;
 
-  getUsername() async {
+  Future getUsername() async {
     final prefs = await SharedPreferences.getInstance();
-    userName = prefs.getString(SharedPrefKeys.userName);
-    return userName;
+    var user = prefs.getString(SharedPrefKeys.userName);
+    setState(() {
+      user = username;
+    });
+    print(username);
   }
 
   final dateInput = TextEditingController();
@@ -28,8 +31,7 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUsername();
-    print(userName);
+    getUsername(); 
   }
 
   @override
@@ -63,7 +65,7 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                 SizedBox(
                   height: 53,
                   child: StoreTextField(
-                    hintText: userName,
+                    hintText: username,
                   ),
                 ),
                 const SizedBox(height: 20),

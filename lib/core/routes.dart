@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter routes = GoRouter(
-  initialLocation: WelcomeScreen.route,
+  initialLocation: AuthPageScreen.route,
   routes: <GoRoute>[
     GoRoute(
       path: BottomNavigator.route,

@@ -3,11 +3,16 @@ import 'package:demo_app/ui/common/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   static const String name = 'search';
   static const String route = '/search';
   const SearchScreen({super.key});
 
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +25,7 @@ class SearchScreen extends StatelessWidget {
               SizedBox(
                 height: 53,
                 child: StoreTextField(
+                  
                   hintText: 'Search anything',
                   prefixIcon: SizedBox(
                     child: Padding(

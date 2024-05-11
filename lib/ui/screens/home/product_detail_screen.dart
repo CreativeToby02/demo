@@ -69,10 +69,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         icon: SizedBox(),
       ),
       bottomNavigationBar: BottomAppBar(
+        surfaceTintColor: Colors.white,
+        color: Colors.white,
         child: SizedBox(
           height: 58,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -83,7 +85,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Text('Price',
                           style: Theme.of(context).textTheme.bodyLarge),
                       Text(
-                        '# ${widget.product.price}',
+                        '₦${widget.product.price}',
                         style: Theme.of(context)
                             .textTheme
                             .displayMedium
@@ -169,7 +171,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     Text(
                         'The name says it all, the right size slightly snugs the body leaving enough room for comfort in the sleeves and waist.',
                         style: Theme.of(context).textTheme.bodyLarge),
@@ -225,8 +227,8 @@ class ProductSaleDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 400,
-            width: 400,
+            height: 350,
+            width: 340,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
@@ -241,13 +243,13 @@ class ProductSaleDetail extends StatelessWidget {
                 child: GestureDetector(
                   onTap: onTap,
                   child: Container(
-                    height: 60,
-                    width: 60,
+                    height: 45,
+                    width: 45,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5)),
                     child: Padding(
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(8),
                       child: isSelected == true
                           ? SvgPicture.asset('assets/icons/red-heart.svg')
                           : SvgPicture.asset('assets/icons/favorite-icon.svg'),

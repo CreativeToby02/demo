@@ -28,6 +28,26 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final _auth = FirebaseAuth.instance;
 
+  Future<void> goggleSignUp() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        });
+    try {
+      await AuthService().signInWithGoogle();
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      displayErrorMessage(e.code);
+    }
+  }
+
   //sign up user
   Future<void> signUpUser() async {
     showDialog(
@@ -209,7 +229,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 30),
                 GoogleAuthButton(
-                  onTap: () => AuthService().signInWithGoogle(),
+                  onTap: goggleSignUp,
                   title: 'Sign Up with Google',
                 ),
                 const SizedBox(height: 60),

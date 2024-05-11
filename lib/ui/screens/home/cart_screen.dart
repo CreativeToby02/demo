@@ -186,7 +186,7 @@ class _CartProductContainerState extends State<CartProductContainer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '# $productPrice',
+                      '₦$productPrice',
                       style: Theme.of(context)
                           .textTheme
                           .displaySmall
@@ -257,17 +257,17 @@ class _CheckoutCalculatorState extends State<CheckoutCalculator> {
         const SizedBox(height: 30),
         SummaryLine(
           leadingText: 'Sub-total',
-          trailingText: '# $productPrice',
+          trailingText: '₦$productPrice',
         ),
         const SizedBox(height: 20),
         SummaryLine(
           leadingText: 'VAT (%)',
-          trailingText: '# $vatPrice',
+          trailingText: '₦$vatPrice',
         ),
         const SizedBox(height: 20),
         SummaryLine(
           leadingText: 'Shipping fee',
-          trailingText: '# $shippingPrice',
+          trailingText: '₦$shippingPrice',
         ),
         const SizedBox(height: 20),
         const Divider(
@@ -276,7 +276,7 @@ class _CheckoutCalculatorState extends State<CheckoutCalculator> {
         const SizedBox(height: 10),
         SummaryLine(
           leadingText: 'Total',
-          trailingText: '# $productTotalPrice',
+          trailingText: '₦$productTotalPrice',
         ),
         const SizedBox(height: 10),
         const Divider(

@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:async';
 import 'package:demo_app/ui/common/bottom_nav_bar.dart';
 import 'package:demo_app/ui/common/text_field.dart';
 import 'package:demo_app/ui/common/widgets.dart';
@@ -26,6 +27,26 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
+  Future<void> goggleSignIn() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        });
+    try {
+      await AuthService().signInWithGoogle();
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      displayErrorMessage(e.code);
+    }
+  }
+
   Future<void> loginUser() async {
     showDialog(
         context: context,
@@ -45,10 +66,10 @@ class _LoginScreenState extends State<LoginScreen> {
       // ignore: unnecessary_null_comparison
       if (_auth.currentUser != null) {
         GoRouter.of(context).go(BottomNavigator.route);
+        Navigator.pop(context);
       }
     } on FirebaseAuthException catch (e) {
       displayErrorMessage(e.code);
-      Navigator.pop(context);
     }
   }
 
@@ -76,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
+    Navigator.pop(context);
   }
 
   @override
@@ -195,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 30),
                 GoogleAuthButton(
-                  onTap: () async => await AuthService().signInWithGoogle(),
+                  onTap: goggleSignIn,
                   title: 'Login with Google',
                 ),
                 const SizedBox(height: 100),

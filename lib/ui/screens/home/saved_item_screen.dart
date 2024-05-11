@@ -14,7 +14,26 @@ class SavedItemScreen extends StatefulWidget {
 }
 
 class _SavedItemScreenState extends State<SavedItemScreen> {
-  bool savedItem = true;
+  late List<bool> _savedItem;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final store = context.read<Store>();
+    _savedItem = List.filled(store.savedItem.length, true);
+  }
+
+  void _saveItemToggle(int index) {
+    setState(() {
+      _savedItem[index] = !_savedItem[index];
+      if (_savedItem[index] == false) {
+        removeFromSavedItem(index);
+      } else {
+        addToSavedItem(index);
+      }
+    });
+  }
 
   void addToSavedItem(int index) {
     final store = context.read<Store>();
@@ -28,51 +47,42 @@ class _SavedItemScreenState extends State<SavedItemScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //
-    final store = context.read<Store>();
-    final productMenu = store.productMenu;
-    //
-    return Scaffold(
-      appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'Saved Items'),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Divider(
-                height: 2,
-                color: Colors.black26,
-              ),
-              const SizedBox(height: 20),
-              // EmptySavedItem(),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: productMenu.length,
-                  itemBuilder: (context, index) {
-                    return ProductSale(
-                      onTap: () {
-                        setState(() {
-                          savedItem = !savedItem;
-                          if (savedItem == true) {
-                            addToSavedItem(index);
-                          } else {
-                            removeFromSavedItem(index);
-                          }
-                        });
-                      },
-                      isSelected: savedItem,
-                      product: productMenu[index],
-                    );
-                  },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 0,
-                      childAspectRatio:
-                          MediaQuery.of(context).size.width / 2 / 280),
+    return Consumer<Store>(
+      builder: (context, store, child) => Scaffold(
+        appBar: const StoreAppBar(prefixIcon: SizedBox(), title: 'Saved Items'),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(
+                  height: 2,
+                  color: Colors.black26,
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                // EmptySavedItem(),
+                Expanded(
+                  child: GridView.builder(
+                    itemCount: store.savedItem.length,
+                    itemBuilder: (context, index) {
+                      return ProductSale(
+                        onTap: () {
+                          _saveItemToggle(index);
+                        },
+                        isSelected: _savedItem[index],
+                        product: store.savedItem[index],
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 0,
+                        childAspectRatio:
+                            MediaQuery.of(context).size.width / 2 / 280),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

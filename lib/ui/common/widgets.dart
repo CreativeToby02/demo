@@ -187,7 +187,7 @@ class ProductSale extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '# ${product.price}',
+                      '₦${product.price}',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],

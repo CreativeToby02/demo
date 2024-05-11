@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -54,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCVwenjG_tGsiSkjr4qSuXFqmdA6tCF3I4',
-    appId: '1:460569370123:android:368669873d3145526df10e',
+    appId: '1:460569370123:android:12f9d4bdef512a2e6df10e',
     messagingSenderId: '460569370123',
     projectId: 'faisal-store-1c7fe',
     storageBucket: 'faisal-store-1c7fe.appspot.com',
@@ -66,15 +63,29 @@ class DefaultFirebaseOptions {
     messagingSenderId: '460569370123',
     projectId: 'faisal-store-1c7fe',
     storageBucket: 'faisal-store-1c7fe.appspot.com',
+    androidClientId: '460569370123-ls7scf4oc3e7obmeeff829atq32df8re.apps.googleusercontent.com',
+    iosClientId: '460569370123-c2i3ilvh77g1actof25ogifom2n3a1fp.apps.googleusercontent.com',
     iosBundleId: 'com.example.demoApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyD6kvqWxzJLK549RBklWdiwfowx3ZU5q9g',
-    appId: '1:460569370123:ios:de23b5e6551c1e446df10e',
+    appId: '1:460569370123:ios:6a41911e570774dd6df10e',
     messagingSenderId: '460569370123',
     projectId: 'faisal-store-1c7fe',
     storageBucket: 'faisal-store-1c7fe.appspot.com',
-    iosBundleId: 'com.example.demoApp.RunnerTests',
+    androidClientId: '460569370123-ls7scf4oc3e7obmeeff829atq32df8re.apps.googleusercontent.com',
+    iosClientId: '460569370123-c2i3ilvh77g1actof25ogifom2n3a1fp.apps.googleusercontent.com',
+    iosBundleId: 'com.example.demoApp',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCjO_5gu5EBgPJAdXvE4QZiGtGfA2Ubbnk',
+    appId: '1:460569370123:web:65009e796e9552f06df10e',
+    messagingSenderId: '460569370123',
+    projectId: 'faisal-store-1c7fe',
+    authDomain: 'faisal-store-1c7fe.firebaseapp.com',
+    storageBucket: 'faisal-store-1c7fe.appspot.com',
+  );
+
 }

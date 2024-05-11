@@ -7,18 +7,14 @@ class Store extends ChangeNotifier {
   final List<Product> _productMenu = [
     //T-shirt
     Product(
-      name: 'T-shirt',
-      price: '2500',
-      imagePath: 'T-shirt',
-      rating: '4.0',
-    ),
+        name: 'T-shirt', price: '2500', imagePath: 'T-shirt', rating: '4.0'),
     //Cardigan
     Product(
         name: 'Cardigan', price: '3500', imagePath: 'Cardigan', rating: '3.5'),
     //High Boots
     Product(
         name: 'High Boots',
-        price: '1,500',
+        price: '1500',
         imagePath: 'High Boots',
         rating: '4.0'),
     // Jeans
