@@ -54,20 +54,20 @@ final ThemeData LightTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      elevation: MaterialStateProperty.all(0.0),
-      foregroundColor: MaterialStateProperty.all(
+      elevation: WidgetStateProperty.all(0.0),
+      foregroundColor: WidgetStateProperty.all(
         const Color(0xFFFFFFFF),
       ),
-      backgroundColor: MaterialStateProperty.all(
+      backgroundColor: WidgetStateProperty.all(
         const Color(0xFF000000),
       ),
-      textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 16)),
-      shape: MaterialStateProperty.all(
+      textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 16)),
+      shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      minimumSize: MaterialStateProperty.all(const Size(double.infinity, 58.0)),
+      minimumSize: WidgetStateProperty.all(const Size(double.infinity, 58.0)),
     ),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -89,14 +89,95 @@ final ThemeData LightTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
-      elevation: MaterialStateProperty.all(0.0),
-      foregroundColor: MaterialStateProperty.all(
+      elevation: WidgetStateProperty.all(0.0),
+      foregroundColor: WidgetStateProperty.all(
         const Color(0xFF000000),
       ),
-      backgroundColor: MaterialStateProperty.all(
+      backgroundColor: WidgetStateProperty.all(
         Colors.transparent,
       ),
     ),
   ),
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+);
+
+// ignore: non_constant_identifier_names
+final ThemeData DarkTheme = ThemeData(
+  primarySwatch: _createMaterialColor(const Color(0xFFFFFFFF)),
+  primaryColor: const Color(0xFFFFFFFF),
+  brightness: Brightness.dark,
+  textTheme: const TextTheme(
+    displayLarge: TextStyle(
+        fontFamily: 'Inter',
+        color: Color(0xFFFFFFFF),
+        fontSize: 28,
+        fontWeight: FontWeight.w800),
+    displayMedium: TextStyle(
+        fontFamily: 'Inter',
+        color: Color(0xFFFFFFFF),
+        fontSize: 22,
+        fontWeight: FontWeight.w800),
+    displaySmall: TextStyle(
+        fontFamily: 'Inter',
+        color: Color(0xFFFFFFFF),
+        fontSize: 16,
+        fontWeight: FontWeight.w500),
+    bodyLarge: TextStyle(
+        fontFamily: 'Inter',
+        color: Color(0xFFFFFFFF),
+        fontSize: 16,
+        fontWeight: FontWeight.w400),
+    bodyMedium: TextStyle(
+        fontFamily: 'Inter',
+        color: Color(0xFFFFFFFF),
+        fontSize: 12,
+        fontWeight: FontWeight.w400),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      elevation: WidgetStateProperty.all(0.0),
+      foregroundColor: WidgetStateProperty.all(
+        const Color(0xFF000000),
+      ),
+      backgroundColor: WidgetStateProperty.all(
+        const Color(0xFFFFFFFF),
+      ),
+      textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 16)),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      minimumSize: WidgetStateProperty.all(const Size(double.infinity, 58.0)),
+    ),
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    foregroundColor: Colors.white,
+    backgroundColor: Color(0xFFFFFFFF),
+  ),
+  dialogTheme: const DialogTheme(
+    backgroundColor: Color(0xFFFFFFFF),
+    titleTextStyle: TextStyle(
+        fontFamily: 'Avenir',
+        color: Color(0xFFFFFFFF),
+        fontSize: 18,
+        fontWeight: FontWeight.w700),
+    contentTextStyle: TextStyle(
+        fontFamily: 'Avenir',
+        color: Color(0xFFFFFFFF),
+        fontSize: 14,
+        fontWeight: FontWeight.w500),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      elevation: WidgetStateProperty.all(0.0),
+      foregroundColor: WidgetStateProperty.all(
+        const Color(0xFFFFFFFF),
+      ),
+      backgroundColor: WidgetStateProperty.all(
+        Colors.transparent,
+      ),
+    ),
+  ),
+  scaffoldBackgroundColor: const Color(0xFF000000),
 );

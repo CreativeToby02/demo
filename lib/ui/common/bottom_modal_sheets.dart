@@ -1,7 +1,6 @@
 import 'package:demo_app/core/models/address.dart';
 import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/common/text_field.dart';
-import 'package:demo_app/ui/screens/home/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +48,8 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                 const SizedBox(height: 40),
                 ElevatedButton(
                     onPressed: () {
-                      GoRouter.of(context).push(CheckoutScreen.route);
+                      context.pop();
+
                       context.pop();
                     },
                     child: const Text('Thanks'))
@@ -64,7 +64,6 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _addressFullname.dispose();
     _addressNickname.dispose();
@@ -74,85 +73,86 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Address',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Address Nickname',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.w600),
-            ),
-            StoreTextFormField(
-              controller: _addressNickname,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Full Address',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.w600),
-            ),
-            StoreTextFormField(
-              controller: _addressFullname,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Checkbox(
-                    value: active,
-                    activeColor: Colors.black,
-                    onChanged: (value) {
-                      active = value!;
-                    }),
-                Text(
-                  'Make this as a default address',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                _showAlertDialog();
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Address',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              IconButton(
+                onPressed: () => context.pop(),
+                icon: const Icon(Icons.close),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Text(
+            'Address Nickname',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          StoreTextFormField(
+            controller: _addressNickname,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            'Full Address',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          StoreTextFormField(
+            controller: _addressFullname,
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Checkbox(
+                  value: active,
+                  activeColor: Colors.black,
+                  onChanged: (value) {
+                    active = value!;
+                  }),
+              Text(
+                'Make this as a default address',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () {
+              if (_addressNickname.text.isNotEmpty &&
+                  _addressFullname.text.isNotEmpty) {
                 addToAddress(
                   Address(
                     addressName: _addressNickname.text,
                     addressFullname: _addressFullname.text,
                   ),
                 );
-              },
-              child: const Text('Add'),
-            ),
-            const SizedBox(height: 30),
-          ],
-        ),
+                _showAlertDialog();
+              }
+            },
+            child: const Text('Add'),
+          ),
+          const SizedBox(height: 30),
+        ],
       ),
     );
   }

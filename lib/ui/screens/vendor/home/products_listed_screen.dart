@@ -47,7 +47,7 @@ class _ProductsListedScreenState extends State<ProductsListedScreen> {
                       ),
                     ),
                     child: ProductSale(
-                      product: productMenu[index],
+                      // product: productMenu[index],
                       defaultRating: '0.0',
                       starIconColor: Colors.grey.shade400,
                       defaultAssetImage:

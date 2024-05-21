@@ -1,5 +1,6 @@
 import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/common/widgets.dart';
+import 'package:demo_app/ui/screens/home/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:svg_flutter/svg_flutter.dart';
@@ -14,37 +15,6 @@ class SavedItemScreen extends StatefulWidget {
 }
 
 class _SavedItemScreenState extends State<SavedItemScreen> {
-  late List<bool> _savedItem;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    final store = context.read<Store>();
-    _savedItem = List.filled(store.savedItem.length, true);
-  }
-
-  void _saveItemToggle(int index) {
-    setState(() {
-      _savedItem[index] = !_savedItem[index];
-      if (_savedItem[index] == false) {
-        removeFromSavedItem(index);
-      } else {
-        addToSavedItem(index);
-      }
-    });
-  }
-
-  void addToSavedItem(int index) {
-    final store = context.read<Store>();
-    store.addToSaved(store.productMenu[index]);
-  }
-
-  void removeFromSavedItem(int index) {
-    final store = context.read<Store>();
-    store.removeFromSaved(store.productMenu[index]);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<Store>(
@@ -66,12 +36,33 @@ class _SavedItemScreenState extends State<SavedItemScreen> {
                   child: GridView.builder(
                     itemCount: store.savedItem.length,
                     itemBuilder: (context, index) {
-                      return ProductSale(
-                        onTap: () {
-                          _saveItemToggle(index);
-                        },
-                        isSelected: _savedItem[index],
-                        product: store.savedItem[index],
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailScreen(
+                                product: store.savedItem[index],
+                                index: index,
+                              );
+                            },
+                          ),
+                        ),
+                        child: ProductSale(
+                          savedOnTap: () {
+                            // setState(() {
+                            //   store.productMenu[index].isLiked =
+                            //       !store.productMenu[index].isLiked;
+                            //   if (store.productMenu[index].isLiked == true) {
+                            //     store.addToSavedItem(store.productMenu[index]);
+                            //   } else {
+                            //     store.removeFromSavedItem(
+                            //         store.productMenu[index]);
+                            //   }
+                            // });
+                          },
+                          // product: store.savedItem[index],
+                        ),
                       );
                     },
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

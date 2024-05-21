@@ -7,7 +7,15 @@ import 'package:go_router/go_router.dart';
 class CheckoutScreen extends StatefulWidget {
   static const String name = 'checkout';
   static const String route = '/checkout';
-  const CheckoutScreen({super.key});
+  const CheckoutScreen({
+    super.key,
+    this.subTotal,
+    this.vat,
+    this.shippingFee,
+    this.totalPrice,
+  });
+
+  final int? subTotal, vat, shippingFee, totalPrice;
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -50,6 +58,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final Map<String, dynamic> data = context.extra;
+    // final subTotal = data['subTotal'];
+
     return Scaffold(
       appBar: const StoreAppBar(title: 'Checkout'),
       body: SafeArea(
@@ -164,28 +175,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                 ),
                 const SizedBox(height: 30),
-                const SummaryLine(
+                SummaryLine(
                   leadingText: 'Sub-total',
-                  trailingText: '₦5,870',
+                  trailingText: '₦${widget.subTotal}',
                 ),
                 const SizedBox(height: 20),
-                const SummaryLine(
+                SummaryLine(
                   leadingText: 'VAT (%)',
-                  trailingText: '₦5,870',
+                  trailingText: '₦${widget.vat}',
                 ),
                 const SizedBox(height: 20),
-                const SummaryLine(
+                SummaryLine(
                   leadingText: 'Shipping fee',
-                  trailingText: '₦5,870',
+                  trailingText: '₦${widget.shippingFee}',
                 ),
                 const SizedBox(height: 20),
                 const Divider(
                   height: 2,
                 ),
                 const SizedBox(height: 10),
-                const SummaryLine(
+                SummaryLine(
                   leadingText: 'Total',
-                  trailingText: '₦5,870',
+                  trailingText: '₦${widget.totalPrice}',
                 ),
                 const SizedBox(height: 10),
                 const Divider(

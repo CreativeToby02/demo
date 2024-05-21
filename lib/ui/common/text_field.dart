@@ -278,3 +278,32 @@ class _DatePickerFieldState extends State<DatePickerField> {
     );
   }
 }
+
+class DropDownMenuOption extends StatelessWidget {
+  const DropDownMenuOption({
+    super.key,
+    this.items,
+    this.onChanged,
+  });
+
+  final List<DropdownMenuItem<dynamic>>? items;
+  final Function(dynamic)? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+      focusColor: const Color(0xFFFFFFFF),
+      decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          )),
+      items: items,
+      onChanged: onChanged,
+    );
+  }
+}

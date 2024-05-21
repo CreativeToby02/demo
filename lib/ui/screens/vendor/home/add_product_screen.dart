@@ -95,7 +95,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           name: _productName.text,
                           price: _productPrice.text,
                           imagePath: _productImage.text,
-                          rating: ''),
+                          rating: '',
+                          quantity: 8),
                     );
                   },
                   child: const Text('Add Product'),

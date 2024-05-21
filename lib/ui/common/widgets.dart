@@ -1,7 +1,9 @@
 import 'package:demo_app/core/models/product.dart';
+import 'package:demo_app/core/models/store.dart';
 import 'package:demo_app/ui/screens/home/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class ReturnButton extends StatelessWidget {
@@ -107,29 +109,31 @@ class GoogleAuthButton extends StatelessWidget {
 class ProductSale extends StatelessWidget {
   const ProductSale({
     super.key,
-    this.isSelected,
-    this.onTap,
-    this.productName,
-    required this.product,
+    // this.isSelected,
+    this.savedOnTap,
+    // required this.product,
     this.icon,
     this.defaultRating,
     this.starIconColor,
     this.defaultAssetImage,
+    this.imagePath,
+    this.name,
+    this.price,
+    this.rating,
+    this.isLiked,
   });
-  final bool? isSelected;
-  final Function()? onTap;
-  final String? productName;
-  final Product product;
+  // final bool? isSelected;
+  final Function()? savedOnTap;
+  // final Product product;
   final Widget? icon;
-  final String? defaultRating;
+  final bool? isLiked;
+  final String? defaultRating, price, name, imagePath, rating;
   final Color? starIconColor;
   final ImageProvider<Object>? defaultAssetImage;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: 200,
-      // width: 250,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Column(
@@ -142,8 +146,7 @@ class ProductSale extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: defaultAssetImage ??
-                      AssetImage('assets/images/${product.imagePath}.png'),
+                  image: defaultAssetImage ?? NetworkImage('$imagePath'),
                 ),
               ),
               child: icon ??
@@ -152,7 +155,7 @@ class ProductSale extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10, right: 10),
                       child: GestureDetector(
-                        onTap: onTap,
+                        onTap: savedOnTap,
                         child: Container(
                           height: 35,
                           width: 35,
@@ -161,7 +164,7 @@ class ProductSale extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5)),
                           child: Padding(
                             padding: const EdgeInsets.all(5),
-                            child: isSelected == true
+                            child: isLiked == true
                                 ? SvgPicture.asset('assets/icons/red-heart.svg')
                                 : SvgPicture.asset(
                                     'assets/icons/favorite-icon.svg'),
@@ -179,7 +182,7 @@ class ProductSale extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name,
+                      '$name',
                       style: Theme.of(context)
                           .textTheme
                           .displaySmall
@@ -187,7 +190,7 @@ class ProductSale extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '₦${product.price}',
+                      '₦$price',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -199,7 +202,7 @@ class ProductSale extends StatelessWidget {
                       color: starIconColor ?? Colors.yellow.shade600,
                     ),
                     Text(
-                      defaultRating ?? product.rating,
+                      defaultRating ?? '$rating',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -513,6 +516,146 @@ class PaymentMethodOption extends StatelessWidget {
                     color: isSelected == true ? Colors.white : Colors.black,
                     fontSize: 14,
                   ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CartProductContainer extends StatefulWidget {
+  const CartProductContainer({
+    super.key,
+    required this.product,
+    this.deleteOnTap,
+  });
+  final Product product;
+  final Function()? deleteOnTap;
+
+  @override
+  State<CartProductContainer> createState() => _CartProductContainerState();
+}
+
+class _CartProductContainerState extends State<CartProductContainer> {
+  void decreaseQuantity() {
+    final store = context.read<Store>();
+    if (widget.product.quantity > 1) {
+      setState(() {
+        widget.product.quantity--;
+      });
+      store.calculateTotalPrice(-int.parse(widget.product.price));
+    }
+  }
+
+  void increaseQuantity() {
+    final store = context.read<Store>();
+    if (widget.product.quantity < 5) {
+      setState(() {
+        widget.product.quantity++;
+        store.calculateTotalPrice(int.parse(widget.product.price));
+      });
+    }
+  }
+
+  int productPrice() {
+    return widget.product.quantity * int.parse(widget.product.price);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Store>(
+      builder: (context, store, child) => Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: const Color(0xFFF2F2F2),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 79,
+              width: 83,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color(0xFF000000).withOpacity(0.4),
+                ),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Image.asset(
+                'assets/images/${widget.product.name}.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.product.name,
+                        style:
+                            Theme.of(context).textTheme.displaySmall?.copyWith(
+                                  fontSize: 14,
+                                ),
+                      ),
+                      GestureDetector(
+                        onTap: widget.deleteOnTap,
+                        child: SvgPicture.asset(
+                          'assets/icons/delete-icon.svg',
+                          height: 20,
+                          width: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'SIZE L',
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 12,
+                        ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '₦${productPrice()}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall
+                            ?.copyWith(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                      ),
+                      Row(
+                        children: [
+                          QuantitySelectionButton(
+                            selectionType: '-',
+                            onTap: () {
+                              decreaseQuantity();
+                            },
+                          ),
+                          const SizedBox(width: 10),
+                          Text('${widget.product.quantity}'),
+                          const SizedBox(width: 10),
+                          QuantitySelectionButton(
+                            selectionType: '+',
+                            onTap: () {
+                              increaseQuantity();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

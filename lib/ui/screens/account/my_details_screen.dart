@@ -14,24 +14,35 @@ class MyDetailsScreen extends StatefulWidget {
 }
 
 class _MyDetailsScreenState extends State<MyDetailsScreen> {
-  String? username;
+  String? username, email;
+
+  late SharedPreferences prefs;
 
   Future getUsername() async {
-    final prefs = await SharedPreferences.getInstance();
-    var user = prefs.getString(SharedPrefKeys.userName);
-    setState(() {
-      user = username;
-    });
-    print(username);
+    prefs = await SharedPreferences.getInstance();
+    username = prefs.getString(SharedPrefKeys.userName);
+    email = prefs.getString(SharedPrefKeys.userEmail);
+    setState(() {});
   }
 
-  final dateInput = TextEditingController();
+  final _dateInput = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+
+  String selectedGender = 'Male';
+  var genders = ['Male', 'Female'];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getUsername(); 
+    getUsername();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameController.dispose();
+    _emailController.dispose();
   }
 
   @override
@@ -66,6 +77,7 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                   height: 53,
                   child: StoreTextField(
                     hintText: username,
+                    controller: _usernameController,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -76,9 +88,12 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                       ),
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
+                SizedBox(
                   height: 53,
-                  child: StoreTextField(),
+                  child: StoreTextField(
+                    controller: _emailController,
+                    hintText: email,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -90,7 +105,7 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                 const SizedBox(height: 10),
                 SizedBox(
                   height: 53,
-                  child: DatePickerField(dateInput: dateInput),
+                  child: DatePickerField(dateInput: _dateInput),
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -100,9 +115,22 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                       ),
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
-                  height: 53,
-                  child: StoreTextField(),
+                SizedBox(
+                  height: 50,
+                  child: DropDownMenuOption(
+                      items: genders
+                          .map(
+                            (gender) => DropdownMenuItem<String>(
+                              value: gender,
+                              child: Text(gender),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (genders) {
+                        setState(() {
+                          selectedGender = genders!;
+                        });
+                      }),
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -125,7 +153,16 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                 ),
                 const SizedBox(height: 50),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      prefs.setString(
+                          SharedPrefKeys.userName, _usernameController.text);
+                      username = prefs.getString(SharedPrefKeys.userName);
+                      prefs.setString(
+                          SharedPrefKeys.userEmail, _emailController.text);
+                      email = prefs.getString(SharedPrefKeys.userEmail);
+                    });
+                  },
                   child: const Text('Submit'),
                 )
               ],

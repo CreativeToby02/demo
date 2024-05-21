@@ -7,30 +7,72 @@ class Store extends ChangeNotifier {
   final List<Product> _productMenu = [
     //T-shirt
     Product(
-        name: 'T-shirt', price: '2500', imagePath: 'T-shirt', rating: '4.0'),
+      name: 'T-shirt',
+      price: '2500',
+      imagePath: 'T-shirt',
+      rating: '4.0',
+    ),
     //Cardigan
     Product(
-        name: 'Cardigan', price: '3500', imagePath: 'Cardigan', rating: '3.5'),
+      name: 'Cardigan',
+      price: '3500',
+      imagePath: 'Cardigan',
+      rating: '3.5',
+    ),
     //High Boots
     Product(
-        name: 'High Boots',
-        price: '1500',
-        imagePath: 'High Boots',
-        rating: '4.0'),
+      name: 'High Boots',
+      price: '1500',
+      imagePath: 'High Boots',
+      rating: '4.0',
+    ),
     // Jeans
-    Product(name: 'Jeans', price: '2000', imagePath: 'Jeans', rating: '4.0'),
+    Product(
+      name: 'Jeans',
+      price: '2000',
+      imagePath: 'Jeans',
+      rating: '4.0',
+    ),
     //Snikers
     Product(
-        name: 'Snickers', price: '4500', imagePath: 'Snickers', rating: '4.0'),
+      name: 'Snickers',
+      price: '4500',
+      imagePath: 'Snickers',
+      rating: '4.0',
+    ),
     //Sweater
-    Product(name: 'Coat', price: '2500', imagePath: 'Coat', rating: '4.0'),
+    Product(
+      name: 'Coat',
+      price: '2500',
+      imagePath: 'Coat',
+      rating: '4.0',
+    ),
     //Trave Bag
     Product(
-        name: 'Travel Bag',
-        price: '2500',
-        imagePath: 'Travel Bag',
-        rating: '4.0'),
+      name: 'Travel Bag',
+      price: '2500',
+      imagePath: 'Travel Bag',
+      rating: '4.0',
+    ),
   ];
+
+  int _totalPrice = 0;
+
+  int get totalPrice => _totalPrice;
+
+  void calculateSubTotal() {
+    _totalPrice = _cart.fold(
+      0,
+      (previousValue, product) =>
+          previousValue + int.parse(product.price) * product.quantity,
+    );
+    notifyListeners();
+  }
+
+  void calculateTotalPrice(int price) {
+    _totalPrice += price;
+    notifyListeners();
+  }
 
   //Customer Cart
   final List<Product> _cart = [];
@@ -64,25 +106,22 @@ class Store extends ChangeNotifier {
 
   //add to cart
   void addToCart(Product productItem) {
-    // , int quantity
-    // for (int i = 0; i < quantity; i++) {
     _cart.add(productItem);
-    // }
     notifyListeners();
   }
 
   //remove from cart
-  void removeFromCart(Product product) {
-    _cart.remove(product);
+  void removeFromCart(Product productItem) {
+    _cart.remove(productItem);
     notifyListeners();
   }
 
-  void addToSaved(Product savedItem) {
+  void addToSavedItem(Product savedItem) {
     _savedItem.add(savedItem);
     notifyListeners();
   }
 
-  void removeFromSaved(Product savedItem) {
+  void removeFromSavedItem(Product savedItem) {
     _savedItem.remove(savedItem);
     notifyListeners();
   }

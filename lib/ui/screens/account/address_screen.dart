@@ -16,96 +16,100 @@ class AddressScreen extends StatefulWidget {
 class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
-    //
-    final store = context.read<Store>();
-    //
     return Scaffold(
       appBar: const StoreAppBar(
         title: 'Address',
         icon: SizedBox(),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 0.5,
-                  width: double.infinity,
-                  color: Colors.black,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Saved Address',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: store.addressItem.length,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return AddressContainer(
-                        addressName: store.addressItem[index].addressName,
-                        addressFullName:
-                            store.addressItem[index].addressFullname,
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 30),
-                GestureDetector(
-                  onTap: () => showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        return const AddAddressBottomSheet();
-                      }),
-                  child: Container(
-                    height: 50,
+      body: Consumer<Store>(
+        builder: (context, store, child) => SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 0.5,
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xFF797979),
-                        width: 0.4,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.arrow_forward_rounded),
-                        const SizedBox(width: 10),
-                        Text(
-                          'Add New Address',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Saved Address',
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontWeight: FontWeight.w900,
                         ),
-                      ],
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: store.addressItem.length,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onHorizontalDragEnd: (details) {
+                            store.removeFromAddress(store.addressItem[index]);
+                          },
+                          child: AddressContainer(
+                            addressName: store.addressItem[index].addressName,
+                            addressFullName:
+                                store.addressItem[index].addressFullname,
+                          ),
+                        );
+                      },
                     ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Apply'),
+                  const SizedBox(height: 30),
+                  GestureDetector(
+                    onTap: () => showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return const AddAddressBottomSheet();
+                        }),
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color(0xFF797979),
+                          width: 0.4,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.arrow_forward_rounded),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Add New Address',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                )
-              ],
+                  const SizedBox(height: 30),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Apply'),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

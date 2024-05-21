@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:demo_app/ui/common/bottom_nav_bar.dart';
 import 'package:demo_app/ui/screens/customer_authentication/auth_page.dart';
 import 'package:demo_app/ui/screens/vendor/vendor_anuthentication/vendor_auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -105,7 +104,7 @@ class AddNewCardAlertDialog extends StatelessWidget {
           const SizedBox(height: 40),
           ElevatedButton(
             onPressed: () {
-              GoRouter.of(context).push(BottomNavigator.route);
+              context.pop();
               context.pop();
             },
             child: const Text('Thanks'),
